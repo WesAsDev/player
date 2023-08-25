@@ -1,14 +1,30 @@
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient()
+import { Music } from "@prisma/client";
+import PrismaC from "../configs/prisma";
 
 
 
 export default class MusicController{
-    public getById(id: string){
+    public async getById(id: number){
+        const music = await PrismaC.getPrisma().music.findUnique({
+            where:{
+                id: id
+            }
+        })
 
+        return music;
     }
 
-    public getAll(){
-        prisma.music.findMany()
+    public async getAll(){
+        const music = await PrismaC.getPrisma().music.findMany();
+        
+        return music;
+    }
+
+    public async insertMusic(music: Music){
+        const newMusic = await PrismaC.getPrisma().music.create({
+            data:music
+        })
+
+        return newMusic;
     }
 }

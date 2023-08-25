@@ -1,8 +1,9 @@
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient()
+import PrismaC from "../configs/prisma"
+
+
 
 export async function storeMusic(arch: any) {
-  const Music = await prisma.music.create({
+  const Music = await PrismaC.getPrisma().music.create({
     data: {
      title: 'NJ',
      binary: arch,
@@ -24,7 +25,7 @@ export async function storeMusic(arch: any) {
 
 
 export async function getMusic(id: any) {
-  const msc = await prisma.music.findUnique({
+  const msc = await PrismaC.getPrisma().music.findUnique({
     where: {
       id: 1
     },
