@@ -27,12 +27,14 @@ export default class UserController{
     }
 
     public async createNewUser({email, name} :User){
-        const newUser = PrismaC.getPrisma().user.create({
+        const newUser = await PrismaC.getPrisma().user.create({
             data:{
                 email,
                 name
             }
         })
+
+        return newUser;
     }
 
 }

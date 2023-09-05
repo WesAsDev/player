@@ -4,6 +4,7 @@ const { Readable } = require('stream');
 import { storeMusic, getMusic } from "../controller/primaController"; 
 import userMiddleware from "../middleware/userMiddleware";
 import { Music } from "@prisma/client";
+import MusicController from "../controller/musicController";
 const router = express.Router();
 const cors = require('cors')
 const multer  = require('multer');
@@ -42,10 +43,21 @@ router.get('/music:id', async (req: Request, res: Response)=>{
       }
     }
 
-    
+
 })
 
-router.post('/user', userMiddleware.checkUser, async (req: any, res: Response)=>{
+router.get('/music/getAll', async (req: Request, res: Response)=>{
+    try{
+      const musica = await MusicController.getAll();
+      musica.filter()
+    }catch(e){
+      res.status(400).send({message: 'error'});
+    }
+
+   
+})
+
+router.post('/user/create', userMiddleware.checkUser, async (req: Request, res: Response)=>{
 
     // const nj = JSON.stringify(req.file);
     // storeMusic(nj);
@@ -65,7 +77,31 @@ router.post('/user', userMiddleware.checkUser, async (req: any, res: Response)=>
     
     // faz streaming do audio 
 
-    // res.send('req.file.buffer');
+    res.send(req.body);
+  })
+
+
+  router.post('/user/create', userMiddleware.checkUser, async (req: Request, res: Response)=>{
+
+    // const nj = JSON.stringify(req.file);
+    // storeMusic(nj);
+    // const t = JSON.parse(nj);
+    // console.log(t)
+  
+   
+
+
+    //     // só exibe quando terminar de enviar tudo
+    // stream.on('end', (e:any) =>{
+    //   console.log('e',e)
+    //    console.log('acabou')
+    //   });
+
+
+    
+    // faz streaming do audio 
+
+    res.send(req.body);
   })
 
 export default router;

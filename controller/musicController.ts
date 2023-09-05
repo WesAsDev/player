@@ -2,6 +2,10 @@ import { Music } from "@prisma/client";
 import PrismaC from "../configs/prisma";
 
 
+type getAllMusic ={
+    title: string;
+    id: string;
+}
 
 export default class MusicController{
     public async getById(id: number){
@@ -14,7 +18,7 @@ export default class MusicController{
         return music;
     }
 
-    public async getAll(){
+    public static async getAll(){
         const music = await PrismaC.getPrisma().music.findMany();
         
         return music;
